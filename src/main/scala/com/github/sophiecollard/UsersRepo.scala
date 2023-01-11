@@ -4,15 +4,14 @@ import cats.effect.IO
 
 import scala.collection.concurrent.TrieMap
 import scala.concurrent.{ExecutionContext, Future}
-import scala.concurrent.duration._
 
-trait Users[F[_]] {
+trait UsersRepo[F[_]] {
 
   def getById(id: Id[User]): F[Option[User]]
 
 }
 
-object Users {
+object UsersRepo {
 
   implicit val ec: ExecutionContext = ExecutionContext.global
 
@@ -27,17 +26,14 @@ object Users {
       )
     )
 
-  val UsingFuture: Users[Future] = new Users[Future] {
+  val UsingFuture: UsersRepo[Future] = new UsersRepo[Future] {
     override def getById(id: Id[User]): Future[Option[User]] =
-      Future {
-        Thread.sleep(5000)
-        data.get(id)
-      }
+      Future.successful(data.get(id))
   }
 
-  val UsingIO: Users[IO] = new Users[IO] {
+  val UsingIO: UsersRepo[IO] = new UsersRepo[IO] {
     override def getById(id: Id[User]): IO[Option[User]] =
-      IO.sleep(5.seconds).as(data.get(id))
+      IO.pure(data.get(id))
   }
 
 }
