@@ -16,22 +16,28 @@ object FutureExample {
     val optionT = for {
       user <- OptionT(UsersRepo.UsingFuture.getById(userId))
       _ <- OptionT.when[Future, Unit](user.isThePresident)(())
+      _ <- OptionT.liftF(sealTheBunker())
       _ <- OptionT.liftF(launchTheMissiles())
     } yield ()
     optionT.value.map(_ => ())
   }
 
 //  def pushRedButton(userId: Id[User]): Future[Unit] = {
-//    val launchF = OptionT.liftF(launchTheMissiles())
 //    val optionT = for {
 //      user <- OptionT(UsersRepo.UsingFuture.getById(userId))
 //      _ <- OptionT.when[Future, Unit](user.isThePresident)(())
-//      _ <- launchF
+//      _ <- OptionT.liftF(launchTheMissiles())
 //    } yield ()
 //    optionT.value.map(_ => ())
 //  }
 
   private def launchTheMissiles(): Future[Unit] =
-    Future(println(Boom))
+    Future {
+      Thread.sleep(5000)
+      println(Boom)
+    }
+
+  private def sealTheBunker(): Future[Unit] =
+    Future(println("Phew!"))
 
 }

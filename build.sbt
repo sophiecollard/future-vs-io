@@ -6,7 +6,7 @@ ThisBuild / organizationName := "SophieCollard"
 lazy val root = (project in file("."))
   .configs(IntegrationTest extend Test) // Test must be extended in order to access fixtures
   .settings(
-    name := "twitter-clone",
+    name := "future-vs-io",
     libraryDependencies ++= Dependencies.list,
     resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases/",
     scalacOptions ++= Seq(
