@@ -23,10 +23,12 @@ object FutureExample {
   }
 
 //  def pushRedButton(userId: Id[User]): Future[Unit] = {
+//    val launchF = OptionT.liftF(launchTheMissiles())
 //    val optionT = for {
 //      user <- OptionT(UsersRepo.UsingFuture.getById(userId))
 //      _ <- OptionT.when[Future, Unit](user.isThePresident)(())
-//      _ <- OptionT.liftF(launchTheMissiles())
+//      _ <- OptionT.liftF(sealTheBunker())
+//      _ <- launchF
 //    } yield ()
 //    optionT.value.map(_ => ())
 //  }

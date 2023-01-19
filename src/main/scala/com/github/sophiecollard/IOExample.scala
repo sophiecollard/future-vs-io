@@ -26,7 +26,21 @@ object IOExample extends IOApp {
 //    val optionT = for {
 //      user <- OptionT(UsersRepo.UsingIO.getById(userId))
 //      _ <- OptionT.when[IO, Unit](user.isThePresident)(())
+//      _ <- OptionT.liftF(sealTheBunker())
 //      _ <- launchF
+//    } yield ()
+//    optionT.value.void
+//  }
+
+//  def pushRedButton(userId: Id[User]): IO[Unit] = {
+//    val sealF = OptionT.liftF(sealTheBunker())
+//    val launchF = OptionT.liftF(launchTheMissiles())
+//    val optionT = for {
+//      user <- OptionT(UsersRepo.UsingIO.getById(userId))
+//      _ <- OptionT.when[IO, Unit](user.isThePresident)(())
+//      _ <- (sealF, launchF).parMapN { case _ =>
+//        ()
+//      }
 //    } yield ()
 //    optionT.value.void
 //  }
